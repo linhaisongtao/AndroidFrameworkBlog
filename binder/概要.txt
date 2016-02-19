@@ -1,0 +1,19 @@
+1.binder设计的目的以及意义
+	为了高效便捷地实现Android进程间的通信（IPC）。相比较传统的linuxIPC机制，binder通信减少了进程间数据拷贝的次数，只需要一次就可以实现。
+	不同的进程在运行在不同的虚拟地址空间，所以不同的进程之间无法直接进行通信以及数据的传递，需要内核的支持，同时将数据在两个不同的地址空间之间进行拷贝。
+2.binder的设计架构
+3.linux驱动编程基础
+	采用linux系统调用和linux中断处理的原理。首先，驱动程序将驱动信息包括设备描述符，设备文件操作处理对象file_operations注册到系统的驱动管理器中。接着进程通过特定的系统调用，触发linux系统调用，最终执行file_operations的相应的方法。
+
+4.详细分析binder
+	驱动层分析
+	c++层分析
+	java层分析
+	
+5.完整的进程间IPC过程。
+	a.Binder成为linux的设备驱动
+	b.ServiceManager成为服务管理者，Binder描述符为0
+	c.服务端进程通过特定的Binder描述符0和binder驱动向ServiceManager进程注册服务
+	d.客户端进程通过特定的Binder描述符0和binder驱动向ServiceManager进程获取服务进程的Binder描述符
+	e.客户端进程通过拿到的服务端进程的Binder描述符和binder驱动，向服务端进行发起请求
+	f.服务端进程接收到消息后，进行相应的处理。
